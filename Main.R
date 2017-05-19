@@ -87,7 +87,7 @@ data.target.split.evaluate <- data.target.split[(floor(nrow(data.target.split)*.
 
 library(rpart)
 
-# 67% Inform + edu + len
+# Rpart
 data.target.split.rpart <- rpart(data.target.split.train$success ~ flag + soobshenii + loyalnost + vovlechennost, data = data.target.split.train, method = "class", cp = 0.011, na.action = na.rpart)
 
 summary(data.target.split.rpart)
@@ -120,25 +120,25 @@ accurasy <- sqldf("SELECT count(tabelnyi), success,prediction from che t group b
 print(paste("% of predicted classifications correct", 100*sum(accurasy[which(accurasy$prediction == 1 & accurasy$success == 1),]$`count(tabelnyi)`)/sum(accurasy[which(accurasy$prediction == 1),]$`count(tabelnyi)`)))
 
 
-# Save results
+# # Save results
 setwd('E:/work/git/base/news')
 
-save(data.target.split.rpart, file = "rpart_model_78.Rdata")
-load("rpart_model_87.Rdata", envir = e <- new.env())
-identical(data.target.split.rpart, e$data.target.split.rpart, ignore.environment = TRUE)
-data.target.split.rpart <- e$data.target.split.rpart
-
-save(data.target.split, file = "data_target_split_78.Rdata")
-load("data_target_split_87.Rdata", envir = e <- new.env())
-identical(data.target.split, e$data.target.split, ignore.environment = TRUE)
-data.target.split <- e$data.target.split.rpart
-
-save(data.target.split.evaluate, file = "data_target_split_evaluate_78.Rdata")
-load("data_target_split_evaluate_87.Rdata", envir = e <- new.env())
-identical(data.target.split.evaluate, e$data.target.split.evaluate, ignore.environment = TRUE)
-data.target.split.evaluate <- e$data.target.split.evaluate
-
-save(data.target.split.train, file = "data_target_split_train_78.Rdata")
-load("data_target_split_train_87.Rdata", envir = e <- new.env())
-identical(data.target.split.train, e$data.target.split.train, ignore.environment = TRUE)
-data.target.split.train <- e$data.target.split.train
+# save(data.target.split.rpart, file = "rpart_model_72.Rdata")
+# load("rpart_model_87.Rdata", envir = e <- new.env())
+# identical(data.target.split.rpart, e$data.target.split.rpart, ignore.environment = TRUE)
+# data.target.split.rpart <- e$data.target.split.rpart
+# 
+# save(data.target.split, file = "data_target_split_72.Rdata")
+# load("data_target_split_87.Rdata", envir = e <- new.env())
+# identical(data.target.split, e$data.target.split, ignore.environment = TRUE)
+# data.target.split <- e$data.target.split.rpart
+# 
+# save(data.target.split.evaluate, file = "data_target_split_evaluate_72.Rdata")
+# load("data_target_split_evaluate_87.Rdata", envir = e <- new.env())
+# identical(data.target.split.evaluate, e$data.target.split.evaluate, ignore.environment = TRUE)
+# data.target.split.evaluate <- e$data.target.split.evaluate
+# 
+# save(data.target.split.train, file = "data_target_split_train_72.Rdata")
+# load("data_target_split_train_87.Rdata", envir = e <- new.env())
+# identical(data.target.split.train, e$data.target.split.train, ignore.environment = TRUE)
+# data.target.split.train <- e$data.target.split.train
