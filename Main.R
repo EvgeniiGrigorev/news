@@ -118,3 +118,27 @@ sqldf("SELECT count(tabelnyi), success,prediction from che t group by success,pr
 # Если в модели оставить только тех, кого предсказывает, как успешные "1", тогда точность модели составит ~80%
 accurasy <- sqldf("SELECT count(tabelnyi), success,prediction from che t group by success,prediction")
 print(paste("% of predicted classifications correct", 100*sum(accurasy[which(accurasy$prediction == 1 & accurasy$success == 1),]$`count(tabelnyi)`)/sum(accurasy[which(accurasy$prediction == 1),]$`count(tabelnyi)`)))
+
+
+# Save results
+setwd('E:/work/git/base/news')
+
+save(data.target.split.rpart, file = "rpart_model_78.Rdata")
+load("rpart_model_87.Rdata", envir = e <- new.env())
+identical(data.target.split.rpart, e$data.target.split.rpart, ignore.environment = TRUE)
+data.target.split.rpart <- e$data.target.split.rpart
+
+save(data.target.split, file = "data_target_split_78.Rdata")
+load("data_target_split_87.Rdata", envir = e <- new.env())
+identical(data.target.split, e$data.target.split, ignore.environment = TRUE)
+data.target.split <- e$data.target.split.rpart
+
+save(data.target.split.evaluate, file = "data_target_split_evaluate_78.Rdata")
+load("data_target_split_evaluate_87.Rdata", envir = e <- new.env())
+identical(data.target.split.evaluate, e$data.target.split.evaluate, ignore.environment = TRUE)
+data.target.split.evaluate <- e$data.target.split.evaluate
+
+save(data.target.split.train, file = "data_target_split_train_78.Rdata")
+load("data_target_split_train_87.Rdata", envir = e <- new.env())
+identical(data.target.split.train, e$data.target.split.train, ignore.environment = TRUE)
+data.target.split.train <- e$data.target.split.train
