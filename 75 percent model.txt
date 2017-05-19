@@ -1,0 +1,38 @@
+C:\Program Files\Java\jre1.8.0_131Call:
+rpart(formula = data.target.split.train$success ~ flag + soobshenii + 
+    loyalnost + vovlechennost, data = data.target.split.train, 
+    na.action = na.rpart, method = "class", cp = 0.011)
+  n= 138 
+
+         CP nsplit rel error    xerror       xstd
+1 0.2028986      0 1.0000000 1.1594203 0.08403696
+2 0.0110000      1 0.7971014 0.7971014 0.08335502
+
+Variable importance
+    loyalnost    soobshenii          flag vovlechennost 
+           42            27            25             6 
+
+Node number 1: 138 observations,    complexity param=0.2028986
+  predicted class=0  expected loss=0.5  P(node) =1
+    class counts:    69    69
+   probabilities: 0.500 0.500 
+  left son=2 (118 obs) right son=3 (20 obs)
+  Primary splits:
+      loyalnost     < 1.5 to the left,  improve=5.730508, (0 missing)
+      soobshenii    < 2.5 to the left,  improve=4.127788, (0 missing)
+      flag          < 0.5 to the left,  improve=3.225974, (0 missing)
+      vovlechennost < 0.5 to the left,  improve=1.642857, (0 missing)
+  Surrogate splits:
+      soobshenii    < 1.5 to the left,  agree=0.949, adj=0.65, (0 split)
+      flag          < 0.5 to the left,  agree=0.942, adj=0.60, (0 split)
+      vovlechennost < 2.5 to the left,  agree=0.877, adj=0.15, (0 split)
+
+Node number 2: 118 observations
+  predicted class=0  expected loss=0.440678  P(node) =0.8550725
+    class counts:    66    52
+   probabilities: 0.559 0.441 
+
+Node number 3: 20 observations
+  predicted class=1  expected loss=0.15  P(node) =0.1449275
+    class counts:     3    17
+   probabilities: 0.150 0.850 

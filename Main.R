@@ -1,7 +1,7 @@
 rm(list=ls())
 
 # Work Directory
-datDir <- c('E:/work/git/news')
+datDir <- c('E:/work/git/base')
 setwd(datDir)
 
 # Trying to find Java
@@ -26,7 +26,7 @@ library(rJava)
 library(xlsx)
 
 # Read data
-setwd(paste(datDir,"/base",sep=""))
+setwd(paste(datDir,"/news",sep=""))
 
 base <- read.xlsx("top-300-connect.xlsx",1,as.data.frame=TRUE, 
                   header=T, stringsAsFactors=FALSE, encoding="UTF-8")
@@ -67,7 +67,7 @@ base$ktseli <- rowMeans(base[c('q1', 'q2','q3','q4')], na.rm=TRUE)
 
 summary(base$ktseli)
 
-# ×èñòèì îöåíêè îò ìóñîðà
+# ?????? ?????? ?? ??????
 rdata <- base[which(base$ktseli != 'NaN'),]
 
 summary(rdata$ktseli)
@@ -93,10 +93,10 @@ data.target.split.rpart <- rpart(data.target.split.train$success ~ flag + soobsh
 summary(data.target.split.rpart)
 
 
-# Ðàçìåð äåðåâà
+# Ð Ð°Ð·Ð¼ÐµÑ€ Ð´ÐµÑ€ÐµÐ²Ð°
 plotcp(data.target.split.rpart)
 
-# Ãðàôèêà
+# Ð“Ñ€Ð°Ñ„Ð¸ÐºÐ°
 plot(data.target.split.rpart,uniform = TRUE)
 text(data.target.split.rpart,use.n = TRUE, cex = 0.75)
 # printcp(data.target.split.rpart)
@@ -110,11 +110,11 @@ data.target.split.evaluate$correct <- data.target.split.evaluate$prediction == d
 print(paste("% of predicted classifications correct", 100*mean(data.target.split.evaluate$correct)))
 table(data.target.split.evaluate$prediction, data.target.split.evaluate$success)
 
-# Ïðîâåðêà êëàñòåðîâ ïî äåðåâó ðåøåíèé
+# ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÐºÐ»Ð°ÑÑ‚ÐµÑ€Ð¾Ð² Ð¿Ð¾ Ð´ÐµÑ€ÐµÐ²Ñƒ Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹
 
 che <- data.target.split.evaluate
 sqldf("SELECT count(tabelnyi), success,prediction from che t group by success,prediction")
 
-# Åñëè â ìîäåëü áðàòü òîëüêî òå ïåðåìåííûå, êîòîðûå ìîäåëü ïðîñòàâèëà, êàê "1", òîãäà òî÷íîñòü ìîäåëè ñîñòàâëÿåò ~80%
+# Ð•ÑÐ»Ð¸ Ð² Ð¼Ð¾Ð´ÐµÐ»Ð¸ Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ‚ÐµÑ…, ÐºÐ¾Ð³Ð¾ Ð¿Ñ€ÐµÐ´ÑÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÑ‚, ÐºÐ°Ðº ÑƒÑÐ¿ÐµÑˆÐ½Ñ‹Ðµ "1", Ñ‚Ð¾Ð³Ð´Ð° Ñ‚Ð¾Ñ‡Ð½Ð¾ÑÑ‚ÑŒ Ð¼Ð¾Ð´ÐµÐ»Ð¸ ÑÐ¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ ~80%
 accurasy <- sqldf("SELECT count(tabelnyi), success,prediction from che t group by success,prediction")
 print(paste("% of predicted classifications correct", 100*sum(accurasy[which(accurasy$prediction == 1 & accurasy$success == 1),]$`count(tabelnyi)`)/sum(accurasy[which(accurasy$prediction == 1),]$`count(tabelnyi)`)))
